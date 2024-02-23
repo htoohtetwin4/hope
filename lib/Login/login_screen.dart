@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hope_app/Login/sign_up_screen.dart';
 import 'package:hope_app/constants.dart';
+import 'package:hope_app/home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -12,13 +13,15 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Container(
         // padding: EdgeInsets.symmetric(vertical: 40),
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(
-          colors: [Color(0xffbbd2c5), Color(0xFFA4C639), Color(0xFF81B93D)],
+          colors: [hBaseColorOne, hBaseColorTwo, hBaseColorThree],
           stops: [0, 0.5, 1],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -49,7 +52,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius:
                         BorderRadius.only(topLeft: Radius.elliptical(300, 70))),
                 //login box
-
                 child: Padding(
                   padding: EdgeInsets.all(50),
                   child: Column(
@@ -106,9 +108,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: hBaseColorThree,
                           ),
                           child: Center(
-                            child: Text("Login",
-                                style: TextStyle(
-                                    color: hSecondaryColor, fontWeight: fw_9)),
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomeScreen()));
+                              },
+                              child: Text("Login",
+                                  style: TextStyle(
+                                      color: hSecondaryColor,
+                                      fontWeight: fw_9)),
+                            ),
                           )),
                       SizedBox(
                         height: 20,
