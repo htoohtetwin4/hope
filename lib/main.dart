@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hope_app/Login/login_screen.dart';
-import 'package:hope_app/home/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
