@@ -10,39 +10,100 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // int _page = 0;
+  // GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [hBaseColorOne, hBaseColorTwo, hBaseColorThree],
-              stops: [0, 0.5, 1],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+        // appBar: AppBar(
+        //   flexibleSpace: Container(
+        //     decoration: BoxDecoration(
+        //       gradient: LinearGradient(
+        //         colors: [hBaseColorOne, hBaseColorTwo, hBaseColorThree],
+        //         stops: [0, 0.5, 1],
+        //         begin: Alignment.topLeft,
+        //         end: Alignment.bottomRight,
+        //       ),
+        //     ),
+        //   ),
+        //   title: Text(
+        //     "Hope",
+        //     style: TextStyle(color: Colors.white, fontWeight: fw_6, fontSize: 30),
+        //   ),
+        // ),
+        appBar: AppBar(
+          title: Text(
+            "Hope",
+            style:
+                TextStyle(color: Colors.white, fontWeight: fw_6, fontSize: 30),
+          ),
+          centerTitle: true,
+          backgroundColor: hBaseColorThree,
+          leading: Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+          actions: [
+            IconButton(
+                onPressed: () => {},
+                icon: Icon(
+                  Icons.search,
+                  color: Colors.white,
+                )),
+            // IconButton(onPressed: () => {}, icon: Icon(Icons.more_vert)),
+          ],
+        ),
+        bottomNavigationBar: Container(
+          width: MediaQuery.of(context).size.width,
+          child: CurvedNavigationBar(
+            backgroundColor: hBaseColorOne,
+            // key: _bottomNavigationKey,
+            color: hBaseColorTwo,
+            items: <Widget>[
+              Icon(Icons.propane_tank_outlined, size: 30),
+              Icon(Icons.home, size: 30),
+              Icon(Icons.video_camera_back_outlined, size: 30),
+              Icon(Icons.person_outline_outlined, size: 30),
+            ],
+            onTap: (index) {
+              // setState(
+              //   () {
+              //     _page = index;
+              //   },
+              // );
+            },
           ),
         ),
-        title: Text(
-          "Hope",
-          style: TextStyle(color: Colors.white, fontWeight: fw_6, fontSize: 30),
-        ),
-      ),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: hBaseColorThree,
-        items: <Widget>[
-          Icon(Icons.add, size: 30),
-          Icon(Icons.list, size: 30),
-          Icon(Icons.compare_arrows, size: 30),
-        ],
-        onTap: (index) {
-          //Handle button tap
-        },
-      ),
-      body: Container(
-        child: Text("Home"),
-      ),
-    );
+        body: Container(
+          color: hBaseColorOne,
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                // Text(_page.toString(), textScaleFactor: 10.0),
+                ElevatedButton(
+                  child: Text('Go To Page of index 1'),
+                  onPressed: () {
+                    //Page change using state does the same as clicking index 1 navigation button
+                    // final CurvedNavigationBarState? navBarState =
+                    // _bottomNavigationKey.currentState;
+                    // navBarState?.setPage(1);
+                  },
+                )
+              ],
+            ),
+          ),
+        )
+
+        // body: SingleChildScrollView(
+        //   child: Column(
+        //     children: [
+        //       // Your content here
+        //       Container(
+        //         color: Colors.red,
+        //       )
+        //     ],
+        //   ),
+        // ),
+        );
   }
 }
