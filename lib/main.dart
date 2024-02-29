@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hope_app/Login/login_screen.dart';
-import 'package:hope_app/home/home_screen.dart';
+import 'package:hope_app/screens/Login/login_screen.dart';
+import 'package:hope_app/constants.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: hBaseColorThree),
           useMaterial3: true,
         ),
         home: const LoginScreen());
