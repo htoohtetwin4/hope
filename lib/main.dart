@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hope_app/Login/login_screen.dart';
+import 'package:hope_app/screens/Login/login_screen.dart';
 import 'package:hope_app/constants.dart';
 
 void main() {
