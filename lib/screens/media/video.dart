@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hope_app/constants.dart';
 import 'package:video_player/video_player.dart';
+import 'package:chewie/chewie.dart';
 
 class DetailVideoScreen extends StatefulWidget {
   const DetailVideoScreen({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class DetailVideoScreen extends StatefulWidget {
 
 class _DetailVideoScreenState extends State<DetailVideoScreen> {
   late VideoPlayerController _videoPlayercontroller;
+  ChewieController? _chewieController;
 
   @override
   void initState() {
@@ -19,20 +21,19 @@ class _DetailVideoScreenState extends State<DetailVideoScreen> {
         VideoPlayerController.asset('assets/videoes/test_video1.mp4')
           ..initialize().then((_) {
             setState(() {});
+            _initializeChewieController();
           }).catchError((error) {
             print("Error initializing video player: $error");
           });
   }
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _videoPlayercontroller = VideoPlayerController.networkUrl(Uri.parse(
-  //       'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
-  //     ..initialize().then((_) {
-  //       // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-  //       setState(() {});
-  //     });
-  // }
+
+  void _initializeChewieController() {
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayercontroller,
+      autoPlay: true,
+      looping: true,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,23 +57,11 @@ class _DetailVideoScreenState extends State<DetailVideoScreen> {
         child: _videoPlayercontroller.value.isInitialized
             ? AspectRatio(
                 aspectRatio: _videoPlayercontroller.value.aspectRatio,
-                child: VideoPlayer(_videoPlayercontroller),
+                child: _chewieController != null
+                    ? Chewie(controller: _chewieController!)
+                    : Container(),
               )
             : Container(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _videoPlayercontroller.value.isPlaying
-                ? _videoPlayercontroller.pause()
-                : _videoPlayercontroller.play();
-          });
-        },
-        child: Icon(
-          _videoPlayercontroller.value.isPlaying
-              ? Icons.pause
-              : Icons.play_arrow,
-        ),
       ),
     );
   }
@@ -80,6 +69,7 @@ class _DetailVideoScreenState extends State<DetailVideoScreen> {
   @override
   void dispose() {
     _videoPlayercontroller.dispose();
+    _chewieController?.dispose();
     super.dispose();
   }
 }
