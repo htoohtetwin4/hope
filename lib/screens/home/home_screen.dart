@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hope_app/constants.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:hope_app/screens/media/video.dart';
+import 'package:hope_app/screens/product/products_screen.dart';
+import 'package:hope_app/screens/profile/profile_screen.dart';
+import 'package:hope_app/screens/components/product_card.dart';
+import 'package:hope_app/data.dart';
+import 'dart:ui';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,113 +15,125 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late PageController _pageController;
-  int _selectedIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  void _onPageChanged(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  void _onItemTapped(int index) {
-    if (index == 2) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                DetailVideoScreen()), // Navigate to the VideoScreen
-      );
-    } else {
-      _pageController.animateToPage(
-        index,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.ease,
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: hBaseColorOne,
       appBar: AppBar(
-        titleSpacing: 0,
-        title: Padding(
-          padding: EdgeInsets.only(left: 14.0),
-          child: Text(
-            "Explore",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: fw_6,
-              fontSize: 30,
-            ),
-          ),
-        ),
+        backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
-        backgroundColor: hBaseColorThree,
+        title: Text(
+          "Explore",
+          style: TextStyle(color: Colors.white, fontWeight: fw_7),
+        ),
         actions: [
           IconButton(
-            onPressed: () => {},
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+            },
+            icon: Icon(Icons.account_circle),
           ),
         ],
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: hBaseColorOne,
-        color: hBaseColorTwo,
-        items: <Widget>[
-          Icon(Icons.propane_tank_outlined, size: 30),
-          Icon(Icons.home, size: 30),
-          Icon(Icons.video_camera_back_outlined, size: 30),
-          Icon(Icons.person_outline_outlined, size: 30),
-        ],
-        onTap: _onItemTapped,
-      ),
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: _onPageChanged,
-        children: <Widget>[
-          Container(
-            color: hBaseColorOne,
-            child: Center(
-              child: Text("Page 1"), // Your first page content
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DetailVideoScreen()),
+                );
+              },
+              child: Card(
+                elevation: 4,
+                margin: EdgeInsets.all(8),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Stack(
+                    children: [
+                      Image.asset(
+                        'assets/images/movie_demo.jpg',
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                        height: 230,
+                      ),
+                      Positioned.fill(
+                        child: BackdropFilter(
+                          //blur effect
+                          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                          child: Container(
+                            //Opacity
+                            color: Colors.black.withOpacity(0.5),
+                          ),
+                        ),
+                      ),
+                      Positioned.fill(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(
+                              " Products 1 Usage Video",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.black,
+                                    blurRadius: 2,
+                                    offset: Offset(1, 1),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-          Container(
-            color: hBaseColorOne,
-            child: Center(
-              child: Text("Page 2"), // Your second page content
+            SizedBox(
+              height: 20,
             ),
-          ),
-          Container(
-            color: hBaseColorOne,
-            child: Center(
-              child: Text("Page 3"), // Placeholder for the video screen
+            Text(
+              "Products",
+              style: TextStyle(
+                  fontSize: 27, color: Colors.white, fontWeight: fw_6),
             ),
-          ),
-          Container(
-            color: hBaseColorOne,
-            child: Center(
-              child: Text("Page 4"), // Your fourth page content
+            Divider(
+              thickness: 2,
+              color: hBaseColorThree,
             ),
-          ),
-        ],
+            Expanded(
+              child: _buildAllProducts(),
+            )
+          ],
+        ),
       ),
     );
   }
+
+  // products card positions & design
+  _buildAllProducts() => GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: (100 / 150),
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12),
+      scrollDirection: Axis.vertical,
+      itemCount: Hproducts.NewProducts.length,
+      itemBuilder: ((context, index) {
+        final Products = Hproducts.NewProducts[index];
+        return ProductCard(product: Products);
+      }));
 }

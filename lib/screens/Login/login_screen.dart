@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hope_app/screens/Login/sign_up_screen.dart';
 import 'package:hope_app/constants.dart';
-import 'package:hope_app/screens/home/home_screen.dart';
+import 'package:hope_app/screens/home/body.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -114,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const HomeScreen()));
+                                            const MainScreen()));
                               },
                               child: Text("Login",
                                   style: TextStyle(

@@ -43,7 +43,7 @@ class _DetailVideoScreenState extends State<DetailVideoScreen> {
         title: Padding(
           padding: EdgeInsets.only(left: 14.0),
           child: Text(
-            "Videoes",
+            "Video",
             style: TextStyle(
               color: Colors.white,
               fontWeight: fw_6,
@@ -51,17 +51,28 @@ class _DetailVideoScreenState extends State<DetailVideoScreen> {
             ),
           ),
         ),
-        backgroundColor: hBaseColorThree,
+        backgroundColor: hBaseColorOne,
       ),
-      body: Center(
-        child: _videoPlayercontroller.value.isInitialized
-            ? AspectRatio(
-                aspectRatio: _videoPlayercontroller.value.aspectRatio,
-                child: _chewieController != null
-                    ? Chewie(controller: _chewieController!)
-                    : Container(),
-              )
-            : Container(),
+      body: Column(
+        children: [
+          Center(
+            child: _videoPlayercontroller.value.isInitialized
+                ? AspectRatio(
+                    aspectRatio: _videoPlayercontroller.value.aspectRatio,
+                    child: _chewieController != null
+                        ? Chewie(controller: _chewieController!)
+                        : Container(),
+                  )
+                : Container(),
+          ),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                  color: hBaseColorThree,
+                  borderRadius: BorderRadiusDirectional.circular(30)),
+            ),
+          )
+        ],
       ),
     );
   }
