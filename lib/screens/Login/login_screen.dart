@@ -36,7 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   Text(
                     "Hope",
-                    style: TextStyle(color: Colors.white, fontSize: 50),
+                    style: TextStyle(
+                        color: Colors.white, fontSize: 50, fontWeight: fw_8),
                   )
                 ],
               ),
@@ -88,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   height: 20,
                                 ),
                                 TextField(
+                                  obscureText: true,
                                   decoration: InputDecoration(
                                     focusedBorder: UnderlineInputBorder(
                                         borderSide:

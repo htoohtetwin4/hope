@@ -1,18 +1,15 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:hope_app/models/Videoes.dart';
 
-class VideoCard extends StatelessWidget {
-  final String title;
-  final bool favourite;
-  final String time;
-  final String thumbnail;
-  VideoCard({
-    required this.title,
-    required this.favourite,
-    required this.time,
-    required this.thumbnail,
-  });
+class VideoCard extends StatefulWidget {
+  final Video video;
+  const VideoCard({Key? key, required this.video}) : super(key: key);
+
+  @override
+  _VideoCardState createState() => _VideoCardState();
+}
+
+class _VideoCardState extends State<VideoCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,7 +35,7 @@ class VideoCard extends StatelessWidget {
             Colors.black.withOpacity(0.35),
             BlendMode.multiply,
           ),
-          image: AssetImage(thumbnail),
+          image: AssetImage(widget.video.thumbnail),
           fit: BoxFit.cover,
         ),
       ),
@@ -48,7 +45,7 @@ class VideoCard extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.0),
               child: Text(
-                title,
+                widget.video.title,
                 style: TextStyle(fontSize: 19, color: Colors.white),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
@@ -70,13 +67,13 @@ class VideoCard extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      // Icon(
-                      //   favourite == true
-                      //       ? Icons.favorite
-                      //       : Icons.favorite_border,
-                      //   color: Colors.red,
-                      //   size: 18,
-                      // ),
+                      Icon(
+                        widget.video.favourite == true
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: Colors.red,
+                        size: 18,
+                      ),
                       SizedBox(width: 7),
                     ],
                   ),
@@ -97,7 +94,7 @@ class VideoCard extends StatelessWidget {
                       ),
                       SizedBox(width: 7),
                       Text(
-                        time,
+                        widget.video.time,
                         style: TextStyle(color: Colors.white),
                       ),
                     ],
