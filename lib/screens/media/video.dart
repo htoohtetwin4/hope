@@ -30,8 +30,8 @@ class _DetailVideoScreenState extends State<DetailVideoScreen> {
   void _initializeChewieController() {
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayercontroller,
-      autoPlay: true,
-      looping: true,
+      autoPlay: false,
+      looping: false,
     );
   }
 

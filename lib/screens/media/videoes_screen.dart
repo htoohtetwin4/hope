@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hope_app/constants.dart';
+import 'package:hope_app/data.dart';
 import 'package:hope_app/screens/components/video_card.dart';
 
 class VideoesScreen extends StatefulWidget {
@@ -30,42 +31,10 @@ class _VideoesScreenState extends State<VideoesScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    VideoCard(
-                      title: 'Video One',
-                      favourite: true,
-                      time: '30 min',
-                      thumbnail: 'assets/images/movie_demo.jpg',
-                    ),
-                    VideoCard(
-                      title: 'Video Two',
-                      favourite: false,
-                      time: '30 min',
-                      thumbnail: 'assets/images/movie_demo1.jpg',
-                    ),
-                    VideoCard(
-                      title: 'Video Three',
-                      favourite: true,
-                      time: '30 min',
-                      thumbnail: 'assets/images/movie_demo2.jpg',
-                    ),
-                    VideoCard(
-                      title: 'Video Four',
-                      favourite: false,
-                      time: '30 min',
-                      thumbnail: 'assets/images/movie_demo3.jpg',
-                    ),
-                    VideoCard(
-                      title: 'Video Five',
-                      favourite: true,
-                      time: '30 min',
-                      thumbnail: 'assets/images/movie_demo4.jpg',
-                    ),
-                    VideoCard(
-                      title: 'Video Six',
-                      favourite: true,
-                      time: '30 min',
-                      thumbnail: 'assets/images/movie_demo5.jpg',
-                    ),
+                    for (final videoData in VideoCardData.videoData)
+                      VideoCard(
+                        video: videoData,
+                      ),
                   ],
                 ),
               ),
