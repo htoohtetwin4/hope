@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hope_app/constants.dart';
 import 'package:hope_app/data.dart';
 import 'package:hope_app/screens/components/product_card.dart';
+import 'package:hope_app/screens/product/product_detail.dart';
 
 class ProductsScreen extends StatefulWidget {
   const ProductsScreen({Key? key}) : super(key: key);
@@ -95,6 +96,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
       itemCount: Hproducts.allProducts.length,
       itemBuilder: ((context, index) {
         final allProducts = Hproducts.allProducts[index];
-        return ProductCard(product: allProducts);
+        return GestureDetector(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ProductDetailScreen(product: allProducts))),
+            child: ProductCard(product: allProducts));
       }));
 }
