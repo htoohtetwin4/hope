@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:hope_app/constants.dart';
 import 'package:hope_app/screens/home/home_screen.dart';
-import 'package:hope_app/screens/media/video.dart';
 import 'package:hope_app/screens/media/videoes_screen.dart';
 import 'package:hope_app/screens/product/products_screen.dart';
 
