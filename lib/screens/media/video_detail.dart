@@ -1,74 +1,119 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:hope_app/constants.dart';
-import 'package:hope_app/models/Products.dart';
+import 'package:video_player/video_player.dart';
+import 'package:chewie/chewie.dart';
 
-class ProductDetailScreen extends StatefulWidget {
-  final Product product;
-  const ProductDetailScreen({Key? key, required this.product})
-      : super(key: key);
+class VideoDetailScreen extends StatefulWidget {
+  const VideoDetailScreen({Key? key}) : super(key: key);
 
   @override
-  _ProductDetailScreenState createState() => _ProductDetailScreenState();
+  _VideoDetailScreenState createState() => _VideoDetailScreenState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class _VideoDetailScreenState extends State<VideoDetailScreen> {
+  late VideoPlayerController _videoPlayercontroller;
+  ChewieController? _chewieController;
+
+  @override
+  void initState() {
+    super.initState();
+    _videoPlayercontroller =
+        VideoPlayerController.asset('assets/videoes/test_video1.mp4')
+          ..initialize().then((_) {
+            setState(() {});
+            _initializeChewieController();
+          }).catchError((error) {
+            print("Error initializing video player: $error");
+          });
+  }
+
+  void _initializeChewieController() {
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayercontroller,
+      autoPlay: false,
+      looping: false,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: MediaQuery.of(context).size.height * 0.33,
-            child: Image.asset(
-              'assets/images/product5.jpg',
-              fit: BoxFit.cover,
+      child: Scaffold(
+        // appBar: AppBar(
+        //   titleSpacing: 0,
+        //   title: Padding(
+        //     padding: EdgeInsets.only(left: 14.0),
+        //     child: Text(
+        //       "Video",
+        //       style: TextStyle(
+        //         color: Colors.white,
+        //         fontWeight: fw_6,
+        //         fontSize: 30,
+        //       ),
+        //     ),
+        //   ),
+        //   backgroundColor: hBaseColorOne,
+        // ),
+        body: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              height: MediaQuery.of(context).size.height * 0.33,
+              child: Column(
+                children: [
+                  Center(
+                    child: _videoPlayercontroller.value.isInitialized
+                        ? AspectRatio(
+                            aspectRatio:
+                                _videoPlayercontroller.value.aspectRatio,
+                            child: _chewieController != null
+                                ? Chewie(controller: _chewieController!)
+                                : Container(),
+                          )
+                        : Container(),
+                  ),
+                ],
+              ),
             ),
-          ),
-          _backArrow(context),
-          _productDetailBox(),
-        ],
-      ),
-    ));
-  }
-
-  _backArrow(context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: InkWell(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: Container(
-          clipBehavior: Clip.hardEdge,
-          height: 55,
-          width: 55,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(25)),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              height: 55,
-              width: 55,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(25)),
-              child: Icon(Icons.arrow_back_ios_new),
-            ),
-          ),
+            // _backArrow(context),
+            _videoDetailBox(),
+          ],
         ),
+        // body: Stack(
+
+        // child: Column(
+        //   children: [
+        //     Center(
+        //       child: _videoPlayercontroller.value.isInitialized
+        //           ? AspectRatio(
+        //               aspectRatio: _videoPlayercontroller.value.aspectRatio,
+        //               child: _chewieController != null
+        //                   ? Chewie(controller: _chewieController!)
+        //                   : Container(),
+        //             )
+        //           : Container(),
+        //     ),
+        //   ],
+        // ),
+        // ),
       ),
     );
   }
 
-  _productDetailBox() {
+  @override
+  void dispose() {
+    _videoPlayercontroller.dispose();
+    _chewieController?.dispose();
+    super.dispose();
+  }
+
+  _videoDetailBox() {
     return DraggableScrollableSheet(
-      initialChildSize: 0.65,
+      initialChildSize: 0.72,
       maxChildSize: 1,
-      minChildSize: 0.65,
+      minChildSize: 0.72,
       builder: (context, scrollController) {
         return SingleChildScrollView(
           controller: scrollController,
@@ -109,8 +154,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   children: [
                     ElevatedButton.icon(
                         onPressed: () {},
-                        icon: Icon(Icons.add),
-                        label: const Text('Add to Cart')),
+                        icon: Icon(Icons.download_sharp),
+                        label: const Text('Download')),
                     Text(
                       "100,000 MMK",
                       style: TextStyle(

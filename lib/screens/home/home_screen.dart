@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hope_app/constants.dart';
-import 'package:hope_app/screens/media/video.dart';
-import 'package:hope_app/screens/product/products_screen.dart';
+import 'package:hope_app/screens/media/video_detail.dart';
 import 'package:hope_app/screens/profile/profile_screen.dart';
 import 'package:hope_app/screens/components/product_card.dart';
 import 'package:hope_app/data.dart';
@@ -47,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DetailVideoScreen()),
+                  MaterialPageRoute(builder: (context) => VideoDetailScreen()),
                 );
               },
               child: Card(
