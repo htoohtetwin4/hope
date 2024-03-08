@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hope_app/constants.dart';
 import 'package:hope_app/models/Products.dart';
+import 'package:hope_app/screens/product/cart_screen.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final Product product;
@@ -108,7 +109,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CartScreen()));
+                        },
                         icon: Icon(Icons.add),
                         label: const Text('Add to Cart')),
                     Text(
